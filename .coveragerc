@@ -1,0 +1,13 @@
+[run]
+source =
+    wired_components
+    tests
+
+[paths]
+source =
+    src/wired_components
+    */site-packages/wired_components
+
+[report]
+show_missing = true
+precision = 2
