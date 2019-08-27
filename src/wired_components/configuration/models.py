@@ -5,6 +5,7 @@ from typing import List, Optional, Tuple
 from zope.interface import Interface, Attribute, implementer
 
 PackageResource = Tuple[Package, Resource]
+TemplateDirs = Optional[List[PackageResource]]
 
 
 class IConfiguration(Interface):
@@ -17,4 +18,4 @@ class IConfiguration(Interface):
 @dataclass
 class Configuration:
     # ``template_dir`` is a list of strings with a colon separat
-    template_dirs: Optional[List[PackageResource]] = field(default_factory=list)
+    template_dirs: TemplateDirs = field(default_factory=list)

@@ -13,7 +13,7 @@ If your pluggable app needs more, just register a different implementation.
 """
 from wired import ServiceRegistry
 
-from .models import IConfiguration, Configuration
+from .models import IConfiguration, Configuration, TemplateDirs
 
 
 def wired_setup(registry: ServiceRegistry):
@@ -24,4 +24,5 @@ __all__ = [
     'wired_setup',
     'IConfiguration',
     'Configuration',
+    'TemplateDirs',
 ]
