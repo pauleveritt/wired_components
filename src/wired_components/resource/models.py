@@ -43,4 +43,4 @@ class Collection(Resource, dict):
     """ A container resource """
 
     def __post_init__(self):
-        super(dict).__init__()
+        super(dict).__init__()  # type: ignore

@@ -18,4 +18,4 @@ class IConfiguration(Interface):
 @dataclass
 class Configuration:
     # ``template_dir`` is a list of strings with a colon separat
-    template_dirs: TemplateDirs = field(default_factory=list)
+    template_dirs: TemplateDirs = None
