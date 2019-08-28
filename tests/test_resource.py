@@ -27,3 +27,16 @@ def test_collection_construction():
     assert collection.body == 'body1'
     assert collection.__name__ == 'name1'
     assert collection.__parent__ is None
+
+
+def test_root_construction():
+    from wired_components.resource import Root
+    root = Root(
+        name='name1', parent=None, title='title1', body='body1'
+    )
+    assert root.name == 'name1'
+    assert root.parent is None
+    assert root.title == 'title1'
+    assert root.body == 'body1'
+    assert root.__name__ == 'name1'
+    assert root.__parent__ is None

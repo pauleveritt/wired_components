@@ -18,6 +18,10 @@ class ICollection(IResource):
     """ A container resource such as a directory or folder """
 
 
+class IRoot(ICollection):
+    """ A container resource for the resource tree root """
+
+
 @implementer(IResource)
 @dataclass
 class Resource:
@@ -44,3 +48,9 @@ class Collection(Resource, dict):
 
     def __post_init__(self):
         super(dict).__init__()  # type: ignore
+
+
+@implementer(IResource)
+@dataclass
+class Root(Collection):
+    """ The root of the resource tree"""
