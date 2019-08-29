@@ -81,7 +81,7 @@ def resource_path(resource: Resource) -> str:
     resource_parents = parents(resource)
 
     # Get the names for each parent, then join with slashes
-    resource_parent_names = [p.name for p in resource_parents]
+    resource_parent_names = [p.name for p in resource_parents if p]
     path = '/'.join(resource_parent_names) + '/' + resource.name + '/'
     return path
 
