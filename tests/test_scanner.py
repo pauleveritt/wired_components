@@ -14,7 +14,7 @@ def scanner_container(registry) -> ServiceContainer:
 
 
 def test_scanner_wired_setup(registry):
-    from wired_components import wired_setup
+    from wired_components.scanner import wired_setup
     assert wired_setup(registry) is None
 
 

@@ -6,7 +6,7 @@ def test_configuration_wired_setup(registry):
 def test_configuration_init_empty():
     from wired_components.configuration import Configuration
     configuration = Configuration()
-    assert configuration.template_dirs == []
+    assert configuration.template_dirs is None
 
 
 def test_configuration_init_values():

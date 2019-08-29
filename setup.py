@@ -15,9 +15,12 @@ docs_require = ['Sphinx', 'sphinx_rtd_theme', 'venusian']
 
 tests_require = [
     'pytest',
+    'pytest-mock',
     'pytest-cov',
     'mypy',
-    'pytest-mypy'
+    'pytest-mypy',
+    'py',
+    'pyyaml',
 ]
 
 setup(
