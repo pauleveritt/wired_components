@@ -1,11 +1,11 @@
-from dataclasses import dataclass, field
-from importlib.resources import Package, Resource
+from dataclasses import dataclass
+from importlib.resources import Resource
 from typing import List, Optional, Tuple
 
 from zope.interface import Interface, Attribute, implementer
 
-PackageResource = Tuple[Package, Resource]
-TemplateDirs = Optional[List[PackageResource]]
+TemplateDir = Tuple[str, Resource]
+TemplateDirs = Optional[List[TemplateDir]]
 
 
 class IConfiguration(Interface):

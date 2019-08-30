@@ -1,36 +1,53 @@
-from wired import ServiceRegistry
-from wired.dataclasses import register_dataclass
+import pytest
+from markupsafe import Markup
+from wired import ServiceRegistry, ServiceContainer
 
 
-def test_renderers_wired_setup(registry: ServiceRegistry):
-    from wired_components.renderers import wired_setup
+@pytest.fixture
+def renderer_container(registry) -> ServiceContainer:
+    from wired_components.configuration import IConfiguration, Configuration
+    template_dirs = [('wired_components.sample', 'templates')]
+    configuration = Configuration(template_dirs=template_dirs)
+    container = registry.create_container()
+    container.register_singleton(configuration, IConfiguration)
+
+    # Now do wired_setup
+    from wired_components.renderer import wired_setup
+    wired_setup(registry)
+
+    return container
+
+
+@pytest.fixture
+def this_renderer(renderer_container):
+    from wired_components.renderer import IJinjaRenderer, JinjaRenderer
+
+    # Finally, try to get one
+    renderer: JinjaRenderer = renderer_container.get(IJinjaRenderer)
+    return renderer
+
+
+def test_renderer_wired_setup(registry: ServiceRegistry):
+    from wired_components.renderer import wired_setup
     assert wired_setup(registry) is None
 
 
-def test_renderers_construction():
-    import wired_components
-    from wired_components.renderers import JinjaRenderer
-    template_dirs = [(wired_components, 'configuration')]
+def test_renderer_construction():
+    from wired_components.renderer import JinjaRenderer
+    template_dirs = [('wired_components.sample', 'templates')]
     renderer = JinjaRenderer(template_dirs=template_dirs)
     from jinja2 import Environment
     assert isinstance(renderer.environment, Environment)
 
 
-def test_renderers_injection(registry):
-    # See if configuration is gotten from a container
+def test_renderer_injection(this_renderer):
+    assert len(this_renderer.template_dirs) == 1
 
-    # Make a container with IConfiguration wired up
-    import wired_components
-    from wired_components.configuration import IConfiguration, Configuration
-    template_dirs = [(wired_components, 'configuration')]
-    configuration = Configuration(template_dirs=template_dirs)
-    container = registry.create_container()
-    container.register_singleton(configuration, IConfiguration)
 
-    # Now wire up JinjaRenderer
-    from wired_components.renderers import IJinjaRenderer, JinjaRenderer
-    register_dataclass(registry, JinjaRenderer, for_=IJinjaRenderer)
-
-    # Finally, try to get one
-    renderer = container.get(IJinjaRenderer)
-    assert renderer.template_dirs == template_dirs
+def test_renderer_render(this_renderer):
+    context = dict(label='somelabel')
+    template_name = 'breadcrumb.jinja2'
+    result: Markup = this_renderer.render(
+        context, template_name=template_name,
+    )
+    assert result == 'label is somelabel'

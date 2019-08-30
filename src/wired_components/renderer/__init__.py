@@ -7,15 +7,13 @@ and register more places to look for templates.
 """
 
 from wired import ServiceRegistry
+from wired.dataclasses import register_dataclass
 
 from .models import IJinjaRenderer, JinjaRenderer
 
 
-def wired_setup(registry: ServiceRegistry):
-    pass
-    # The environment is too tricky for a dataclass since it is a
-    # subclass of jinja2.Environment.
-    # registry.register_singleton(environment_factory, IJinjaEnvironment)
+def wired_setup(registry: ServiceRegistry) -> None:
+    register_dataclass(registry, JinjaRenderer, for_=IJinjaRenderer)
 
 
 __all__ = [
