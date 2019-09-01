@@ -15,7 +15,16 @@ One aspect to note, though: resources are represented in a *tree* via the
 """
 from wired import ServiceRegistry
 
-from .models import IResource, Resource, ICollection, Collection, IRoot, Root
+from .models import (
+    IResource,
+    Resource,
+    ICollection,
+    Collection,
+    IRoot,
+    Root,
+    IDocument,
+    Document,
+)
 
 
 def wired_setup(registry: ServiceRegistry):
@@ -30,4 +39,6 @@ __all__ = [
     'Collection',
     'IRoot',
     'Root',
+    'IDocument',
+    'Document',
 ]

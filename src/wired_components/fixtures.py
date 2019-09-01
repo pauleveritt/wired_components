@@ -6,9 +6,7 @@ from wired import ServiceContainer
 from zope.interface import directlyProvides
 
 from wired_components import sample
-from .component import (
-    IComponent, register_component, wired_setup as comp_setup,
-)
+from .component import IComponent, register_component
 from .resource import Root
 from .sample import load_resources
 
@@ -41,6 +39,14 @@ def configuration_setup(registry) -> None:
 
 
 @pytest.fixture
+def root_setup(registry, sample_root) -> None:
+    """ At startup, stash resource tree root in a registry singleton """
+
+    from wired_components.resource import IRoot
+    registry.register_singleton(sample_root, IRoot)
+
+
+@pytest.fixture
 def renderer_setup(registry) -> None:
     """ Connect the renderer to the registry """
 
@@ -51,7 +57,16 @@ def renderer_setup(registry) -> None:
 @pytest.fixture
 def component_setup(registry):
     """ Top-level setup of component """
-    comp_setup(registry)
+
+    from wired_components.component import wired_setup
+    wired_setup(registry)
+
+
+@pytest.fixture
+def request_setup(registry):
+    """ Top-level setup of request """
+    from wired_components.request import wired_setup
+    wired_setup(registry)
 
 
 @pytest.fixture

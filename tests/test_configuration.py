@@ -10,7 +10,6 @@ def test_configuration_init_empty():
 
 
 def test_configuration_init_values():
-    import wired_components
     from wired_components.configuration import Configuration
     configuration = Configuration(
         template_dirs=[

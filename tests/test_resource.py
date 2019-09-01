@@ -29,6 +29,19 @@ def test_collection_construction():
     assert collection.__parent__ is None
 
 
+def test_document_construction():
+    from wired_components.resource import Document
+    document = Document(
+        name='name1', parent=None, title='title1', body='body1'
+    )
+    assert document.name == 'name1'
+    assert document.parent is None
+    assert document.title == 'title1'
+    assert document.body == 'body1'
+    assert document.__name__ == 'name1'
+    assert document.__parent__ is None
+
+
 def test_root_construction():
     from wired_components.resource import Root
     root = Root(

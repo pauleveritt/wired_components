@@ -1,12 +1,11 @@
-from dataclasses import dataclass
-from typing import Dict, get_type_hints, Any, List, Optional
+from dataclasses import dataclass, field
+from typing import Dict, get_type_hints, Any, List
 
-from wired import ServiceContainer
 from zope.interface import Interface, implementer
 
-from wired_components.configuration import Configuration, IConfiguration
-from wired_components.request import Request, IRequest, parents
-from wired_components.resource import Resource, IResource, Root, IRoot
+from wired_components.configuration import Configuration
+from wired_components.request import Request, parents
+from wired_components.resource import Resource, Root
 
 
 class IView(Interface):
@@ -22,24 +21,10 @@ class View:
     context: Resource
     request: Request
     root: Root
-    parents: List[Optional[Resource]]
+    parents: List[Resource] = field(init=False)
 
-    @classmethod
-    def wired_setup(cls, container: ServiceContainer):
-        configuration = container.get(IConfiguration)
-        context = container.get(IResource)
-        request = container.get(IRequest)
-        root = container.get(IRoot)
-
-        p = parents(context)
-
-        return View(
-            configuration=configuration,
-            context=context,
-            request=request,
-            root=root,
-            parents=p,
-        )
+    def __post_init__(self):
+        self.parents = parents(self.context)
 
     def as_dict(self) -> Dict[str, Any]:
         # Return a flattened dictionary as context keys for each field.

@@ -12,19 +12,20 @@ different views for different kinds of resources.
 """
 from wired import ServiceRegistry
 
-from wired_components.resource import IResource
+from .decorator import register_view, view
 from .models import IView, View
 
 
 def wired_setup(registry: ServiceRegistry) -> None:
-    registry.register_factory(
-        View.wired_setup, IView, context=IResource,
-    )
-
+    # No views should be registered by default, the application has
+    # to provide all the views
+    pass
 
 
 __all__ = [
     'wired_setup',
     'IView',
     'View',
+    'register_view',
+    'view',
 ]

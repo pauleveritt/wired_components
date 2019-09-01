@@ -3,7 +3,7 @@ from pathlib import Path
 from yaml import Loader, load
 
 from wired_components.request import find_resource
-from wired_components.resource import Root, Collection, Resource
+from wired_components.resource import Root, Collection, Document
 
 
 def load_yaml(fn: Path):
@@ -49,7 +49,7 @@ def load_resources(contents: Path) -> Root:
         # Get the parent via resource path
         parent_path = resource.parent.relative_to(contents)
         parent = find_resource(root, '/' + str(parent_path))
-        resource = Resource(name=name, parent=parent, **resource_yaml)
+        resource = Document(name=name, parent=parent, **resource_yaml)
         parent[name] = resource
 
     return root

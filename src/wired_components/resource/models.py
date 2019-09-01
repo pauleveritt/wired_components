@@ -22,6 +22,10 @@ class IRoot(ICollection):
     """ A container resource for the resource tree root """
 
 
+class IDocument(IResource):
+    """ A leaf node in a collection """
+
+
 @implementer(IResource)
 @dataclass
 class Resource:
@@ -53,4 +57,10 @@ class Collection(Resource, dict):
 @implementer(IResource)
 @dataclass
 class Root(Collection):
-    """ The root of the resource tree"""
+    """ The root of the resource tree """
+
+
+@implementer(IDocument)
+@dataclass
+class Document(Resource):
+    """ A leaf node in a collection """
