@@ -12,17 +12,9 @@ from wired_components.view import View
 def register_component(
         registry: ServiceRegistry,
         target: Callable,
-        context: Type[Resource] = Resource
+        context: Type[Resource] = IResource
 ):
-    """ Implement the component decorator
-
-     Breadcrumb(title='1')
-     'Breadcrumb' -> partial
-     partial(render_component, 'Breadcrumb', container, title='1'
-     render_component
-        component_factory = container.get(Component, name='Breadcrumb')
-        component_instance = component_factory(name='Breadcrumbs')
-     """
+    """ Imperative form of the component decorator """
     component_name = target.__name__
 
     def component_factory(container: ServiceContainer):
