@@ -33,3 +33,29 @@ def test_component_register_component(
     # Now construct the component instance the correct way, with a prop
     component_instance: SomeComponent = component_class(flag=44)
     assert component_instance.flag == 44
+
+
+def test_component_register_component2(
+        registry: ServiceRegistry,
+        simple_root,
+):
+    from wired_components.component import IComponent
+    from wired_components.component.register_component import register_component2
+
+    # Register a component
+    @implementer(IComponent)
+    @dataclass
+    class SomeComponent:
+        flag: int
+
+    register_component2(registry, SomeComponent)
+
+    # Make a container with an IResource in it
+    container = registry.create_container(context=simple_root)
+
+    # Now get the component *class*
+    component_class = container.get(IComponent, name='SomeComponent')
+
+    # Now construct the component instance the correct way, with a prop
+    component_instance: SomeComponent = component_class(flag=44)
+    assert component_instance.flag == 44
