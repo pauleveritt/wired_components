@@ -72,9 +72,9 @@ def test_normalize_path(path: str, expected: str):
     ]
 
 )
-def test_find_resource(sample_root, path: str, expected: str):
+def test_find_resource(simple_root, path: str, expected: str):
     from wired_components.request import find_resource
-    resource = find_resource(sample_root, path)
+    resource = find_resource(simple_root, path)
     assert expected == resource.name
 
 
@@ -104,14 +104,14 @@ def test_find_resource(sample_root, path: str, expected: str):
     )
 )
 def test_parents(
-        sample_root, this_path: str, expected: Tuple[str],
+        simple_root, this_path: str, expected: Tuple[str],
 ):
     from wired_components.request import (
         find_resource,
         parents,
         resource_path,
     )
-    resource = find_resource(sample_root, this_path)
+    resource = find_resource(simple_root, this_path)
     results = parents(resource)
     result = tuple(
         (
@@ -138,13 +138,13 @@ def test_parents(
     )
 )
 def test_resource_path(
-        sample_root, target_path: str, expected: str,
+        simple_root, target_path: str, expected: str,
 ):
     from wired_components.request import (
         find_resource,
         resource_path,
     )
-    resource = find_resource(sample_root, target_path)
+    resource = find_resource(simple_root, target_path)
     path = resource_path(resource)
     assert expected == path
 
@@ -168,16 +168,16 @@ def test_resource_path(
     ]
 )
 def test_relative_path(
-        sample_root, current_path: str, target_path: str,
+        simple_root, current_path: str, target_path: str,
         expected: str,
 ):
     from wired_components.request import (
         find_resource,
         relative_path,
     )
-    current = find_resource(sample_root, current_path)
-    target = find_resource(sample_root, target_path)
-    result: str = relative_path(sample_root, current, target)
+    current = find_resource(simple_root, current_path)
+    target = find_resource(simple_root, target_path)
+    result: str = relative_path(simple_root, current, target)
     assert result == expected
 
 
@@ -193,12 +193,12 @@ def test_relative_path(
     ]
 )
 def test_static_relative_path(
-        sample_root, current_path: str, expected: str,
+        simple_root, current_path: str, expected: str,
 ):
     from wired_components.request import (
         find_resource,
         relative_static_path,
     )
-    current = find_resource(sample_root, current_path)
+    current = find_resource(simple_root, current_path)
     result: str = relative_static_path(current, 'static/foo.css')
     assert result == expected

@@ -6,7 +6,7 @@ def test_view_wired_setup(registry: ServiceRegistry):
     assert wired_setup(registry) is None
 
 
-def test_view_instance(registry, view_container, sample_root, sample_view):
+def test_view_instance(registry, view_container, simple_root, sample_view):
     # Get the view from the container
     from wired_components.view import IView, View
     view: View = view_container.get(IView)
@@ -19,7 +19,7 @@ def test_view_instance(registry, view_container, sample_root, sample_view):
     assert view.parents[0].title == 'My Site'
 
 
-def test_view_as_dict(registry, view_container, sample_root, sample_view):
+def test_view_as_dict(registry, view_container, simple_root, sample_view):
     # Get the view from the container
     from wired_components.view import IView, View
     view: View = view_container.get(IView)

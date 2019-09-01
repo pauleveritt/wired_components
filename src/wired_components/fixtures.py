@@ -5,15 +5,15 @@ import pytest
 from wired import ServiceContainer
 from zope.interface import directlyProvides
 
-from wired_components import sample
+from wired_components.samples import simple
 from .component import IComponent, register_component
 from .resource import Root
-from .sample import load_resources
+from wired_components.samples.simple import load_resources
 
 
 @pytest.fixture
-def sample_root() -> Root:
-    d = Path(sample.__file__).parent / 'contents'
+def simple_root() -> Root:
+    d = Path(simple.__file__).parent / 'contents'
     root: Root = load_resources(d)
     return root
 
@@ -33,17 +33,17 @@ def configuration_setup(registry) -> None:
     """ At startup, stash a service with some app configuration """
 
     from wired_components.configuration import IConfiguration, Configuration
-    template_dirs = [('wired_components.sample', 'templates')]
+    template_dirs = [('wired_components.samples.simple', 'templates')]
     configuration = Configuration(template_dirs=template_dirs)
     registry.register_singleton(configuration, IConfiguration)
 
 
 @pytest.fixture
-def root_setup(registry, sample_root) -> None:
+def root_setup(registry, simple_root) -> None:
     """ At startup, stash resource tree root in a registry singleton """
 
     from wired_components.resource import IRoot
-    registry.register_singleton(sample_root, IRoot)
+    registry.register_singleton(simple_root, IRoot)
 
 
 @pytest.fixture

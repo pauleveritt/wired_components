@@ -3,18 +3,18 @@ from wired import ServiceContainer
 
 
 @pytest.fixture
-def request_container(registry, sample_root) -> ServiceContainer:
+def request_container(registry, simple_root) -> ServiceContainer:
     from wired_components.request import wired_setup as request_setup
     from wired_components.resource import IRoot
     from wired_components.url import IUrl, Url
 
     # Outside system puts some things in the registry
-    registry.register_singleton(sample_root, IRoot)
+    registry.register_singleton(simple_root, IRoot)
     request_setup(registry)
 
     # Make a container and return it
     container: ServiceContainer = registry.create_container(
-        context=sample_root
+        context=simple_root
     )
     url = Url(path='somepath')
     container.register_singleton(url, IUrl)
@@ -26,7 +26,7 @@ def test_request_wired_setup(registry):
     assert wired_setup(registry) is None
 
 
-def test_request_instance(registry, request_container, sample_root):
+def test_request_instance(registry, request_container, simple_root):
     # Get the request from the container
     from wired_components.request import IRequest, Request
     request: Request = request_container.get(IRequest)
@@ -34,4 +34,4 @@ def test_request_instance(registry, request_container, sample_root):
     # See if we're constructed correctly
     assert request.context.title == 'My Site'
     assert request.path == 'somepath'
-    assert request.root == sample_root
+    assert request.root == simple_root

@@ -6,7 +6,7 @@ from wired import ServiceContainer, ServiceRegistry
 def resource_container(
         registry: ServiceRegistry,
         root_setup,
-        sample_root,
+        simple_root,
         request_setup,
         configuration_setup,
 ) -> ServiceContainer:
@@ -14,7 +14,7 @@ def resource_container(
 
     # Make a container and return it
     container: ServiceContainer = registry.create_container(
-        context=sample_root['d1']
+        context=simple_root['d1']
     )
     url = Url(path='/d1/')
     container.register_singleton(url, IUrl)

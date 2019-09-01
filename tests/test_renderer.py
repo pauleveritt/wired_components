@@ -6,7 +6,7 @@ from wired import ServiceRegistry, ServiceContainer
 @pytest.fixture
 def renderer_container(registry) -> ServiceContainer:
     from wired_components.configuration import IConfiguration, Configuration
-    template_dirs = [('wired_components.sample', 'templates')]
+    template_dirs = [('wired_components.samples.simple', 'templates')]
     configuration = Configuration(template_dirs=template_dirs)
     container = registry.create_container()
     container.register_singleton(configuration, IConfiguration)
@@ -34,7 +34,7 @@ def test_renderer_wired_setup(registry: ServiceRegistry):
 
 def test_renderer_construction():
     from wired_components.renderer import JinjaRenderer
-    template_dirs = [('wired_components.sample', 'templates')]
+    template_dirs = [('wired_components.samples.simple', 'templates')]
     renderer = JinjaRenderer(template_dirs=template_dirs)
     from jinja2 import Environment
     assert isinstance(renderer.environment, Environment)

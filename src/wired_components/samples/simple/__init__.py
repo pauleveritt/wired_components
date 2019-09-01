@@ -11,8 +11,9 @@ Not doing anything exotic (e.g. strictyaml, pydantic.)
 
 """
 
-from .loader import load_resources
+from .loader import load_resources, load_yaml
 
 __all__ = [
     'load_resources',
+    'load_yaml',
 ]

@@ -22,7 +22,7 @@ from wired_components.resource import (
 def test_view_decorator_function(
         registry: ServiceRegistry,
         view_container: ServiceContainer,
-        sample_root,
+        simple_root,
         interface,
 ):
     # Test a view registered for all resources
