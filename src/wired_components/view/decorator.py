@@ -3,41 +3,27 @@
 Provide a decorator and imperative function for registering views.
 
 """
-from typing import Type
+from typing import Type, Optional
 
 from wired import ServiceRegistry, ServiceContainer
+from wired.dataclasses import Injector
 
-from ..request import Request, IRequest
+from wired_components.resource import IResource
 from .models import IView, View
-from ..configuration import Configuration, IConfiguration
 from ..decorator import BaseDecorator
-from ..request import find_resource
-from ..resource import Resource, Root, IRoot
-from ..url import Url, IUrl
+from ..resource import Resource
 
 
 def register_view(
         registry: ServiceRegistry,
         target: Type,
-        context: Type[Resource]
+        context: Optional[Type[Resource]] = IResource
 ):
-    """ Implement the view decorator """
+    """ Imperative form of the decorator """
 
     def view_factory(container: ServiceContainer):
-        url: Url = container.get(IUrl)
-        root: Root = container.get(IRoot)
-        # TODO Perhaps the next line could be replaced with a
-        #   IResource service?
-        context_instance = find_resource(root, url.path)
-        configuration: Configuration = container.get(IConfiguration)
-        request: Request = container.get(IRequest, context=context_instance)
-        view_instance: View = target(
-            configuration=configuration,
-            context=context_instance,
-            request=request,
-            root=root,
-        )
-
+        injector = Injector(container)
+        view_instance = injector(target)
         return view_instance
 
     registry.register_factory(view_factory, IView, context=context)
@@ -45,4 +31,3 @@ def register_view(
 
 class view(BaseDecorator):
     for_ = View
-    register_function = register_view

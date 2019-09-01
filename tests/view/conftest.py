@@ -26,5 +26,5 @@ def sample_view(registry: ServiceRegistry) -> None:
     """ Put one view in the registry """
 
     from wired_components.view import View, register_view
-    from wired_components.resource import IDocument
-    register_view(registry, View, context=IDocument)
+    from wired_components.resource import IResource
+    register_view(registry, View, context=IResource)

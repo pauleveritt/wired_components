@@ -1,11 +1,12 @@
 from dataclasses import dataclass, field
 from typing import Dict, get_type_hints, Any, List
 
+from wired.dataclasses import injected, Context
 from zope.interface import Interface, implementer
 
-from wired_components.configuration import Configuration
-from wired_components.request import Request, parents
-from wired_components.resource import Resource, Root
+from wired_components.configuration import Configuration, IConfiguration
+from wired_components.request import Request, parents, IRequest
+from wired_components.resource import Resource, Root, IRoot
 
 
 class IView(Interface):
@@ -17,11 +18,13 @@ class IView(Interface):
 @implementer(IView)
 @dataclass
 class View:
-    configuration: Configuration
-    context: Resource
-    request: Request
-    root: Root
-    parents: List[Resource] = field(init=False)
+    configuration: Configuration = injected(IConfiguration)
+    context: Resource = injected(Context)
+    request: Request = injected(IRequest)
+    root: Root = injected(IRoot)
+    # TODO We can bring the following back once I teach the
+    # injector to ignore init=False fields
+    # parents: List[Resource] = field(init=False)
 
     def __post_init__(self):
         self.parents = parents(self.context)
