@@ -62,16 +62,15 @@ def register_component2(
     component_name = target.__name__
 
     def component_factory(container: ServiceContainer):
-        def construct_component(**props):
+        def construct_component(**kwargs):
             """ A partial-partial, used to collect kwargs during calling """
-            all_args = props.copy()
 
             # Let's use copied version of Injector, one that supports props
             from wired_components.injector2 import Injector
             injector = Injector(target)
             component_instance = injector(
                 container=container,
-                props=all_args
+                props=kwargs
             )
             return component_instance
 
