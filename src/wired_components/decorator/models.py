@@ -11,8 +11,13 @@ class BaseDecorator:
     for_: Type
     register_function: Callable
 
-    def __init__(self, context: Type = None, name: str = None):
-        self.for_ = self.for_
+    def __init__(
+            self, for_: Type = None, context: Type = None, name: str = None
+    ):
+        # Some decorators (e.g. resource) require a ``for_`` in their
+        # usage, as one decorator covers lots of classes. Others
+        # (e.g. ``view``) provide the ``for_`` once, as a a class attribute.
+        self.for_ = for_ if for_ else self.for_
         self.context = context
         self.name = name
 

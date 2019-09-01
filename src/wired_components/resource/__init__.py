@@ -15,6 +15,9 @@ One aspect to note, though: resources are represented in a *tree* via the
 """
 from wired import ServiceRegistry
 
+from .decorators import (
+    resource,
+)
 from .models import (
     IResource,
     Resource,
@@ -41,4 +44,5 @@ __all__ = [
     'Root',
     'IDocument',
     'Document',
+    'resource',
 ]

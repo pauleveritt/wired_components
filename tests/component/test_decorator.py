@@ -4,20 +4,19 @@ def register_foo(*args, **kwargs):
 
 def test_decorator_construction():
     from wired_components.decorator import BaseDecorator
-    from wired_components.component import IComponent
+    from wired_components.resource import IResource
+    from wired_components.view import IView
 
     # noinspection PyPep8Naming
     class foo(BaseDecorator):
-        for_ = IComponent
+        for_ = IView
         register_function = register_foo
 
-    context = object()
-
     # Construction
-    f: foo = foo(context)
-    assert f.for_ == IComponent
+    f: foo = foo(context=IResource)
+    assert f.for_ == IView
     assert f.register_function() == 987
-    assert f.context == context
+    assert f.context == IResource
     assert f.name is None
 
     # Calling
