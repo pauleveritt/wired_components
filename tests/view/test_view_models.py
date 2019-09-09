@@ -1,5 +1,7 @@
 from wired import ServiceRegistry
 
+from wired_components.fixtures import SomeView
+
 
 def test_view_wired_setup(registry: ServiceRegistry):
     from wired_components.view import wired_setup
@@ -9,22 +11,16 @@ def test_view_wired_setup(registry: ServiceRegistry):
 def test_view_instance(registry, view_container, simple_root, sample_view):
     # Get the view from the container
     from wired_components.view import IView, View
-    view: View = view_container.get(IView)
+    view: SomeView = view_container.get(IView)
 
     # See if we're constructed correctly
-    assert len(view.configuration.template_dirs) == 1
-    assert view.context.title == 'A Doc At The Root'
-    assert view.root.title == 'My Site'
+    assert view.flag == 'someview'
 
 
 def test_view_as_dict(registry, view_container, simple_root, sample_view):
     # Get the view from the container
-    from wired_components.view import IView, View
+    from wired_components.view import IView, View, as_dict
     view: View = view_container.get(IView)
 
-    results = view.as_dict()
-    assert 'configuration' in results
-    assert 'context' in results
-    assert 'request' in results
-    assert 'root' in results
-    assert 'view' in results
+    results = as_dict(view)
+    assert 'flag' in results

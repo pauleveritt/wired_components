@@ -1,6 +1,8 @@
 import pytest
 from wired import ServiceContainer, ServiceRegistry
 
+from wired_components.fixtures import SomeView
+
 
 @pytest.fixture
 def view_container(
@@ -21,6 +23,7 @@ def view_container(
 def sample_view(registry: ServiceRegistry) -> None:
     """ Put one view in the registry """
 
-    from wired_components.view import View, register_view
+    from wired_components.view import register_view
     from wired_components.resource import IResource
-    register_view(registry, View, context=IResource)
+
+    register_view(registry, SomeView, context=IResource)

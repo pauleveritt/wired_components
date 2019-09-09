@@ -43,7 +43,4 @@ def test_view_decorator_function(
 
     # Assert some things
     assert isinstance(view, View)
-    assert len(view.configuration.template_dirs) == 1
-    assert view.context.title == 'A Doc At The Root'
-    assert view.root.title == 'My Site'
     assert view.flag == 99

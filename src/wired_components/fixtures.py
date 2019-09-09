@@ -5,10 +5,15 @@ import pytest
 from wired import ServiceContainer
 from zope.interface import directlyProvides
 
-from wired_components.samples import simple
 from .component import IComponent, register_component
 from .resource import Root
-from wired_components.samples.simple import load_resources
+from .samples import simple
+from .samples.simple import load_resources
+
+
+@dataclass
+class SomeView:
+    flag: str = 'someview'
 
 
 @pytest.fixture

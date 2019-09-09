@@ -13,7 +13,7 @@ different views for different kinds of resources.
 from wired import ServiceRegistry
 
 from .decorator import register_view, view
-from .models import IView, View
+from .models import IView, View, as_dict
 
 
 def wired_setup(registry: ServiceRegistry) -> None:
@@ -28,4 +28,5 @@ __all__ = [
     'View',
     'register_view',
     'view',
+    'as_dict'
 ]
