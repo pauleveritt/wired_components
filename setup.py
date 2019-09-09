@@ -21,6 +21,7 @@ tests_require = [
     'pytest-mypy',
     'py',
     'pyyaml',
+    'beautifulsoup4',
 ]
 
 setup(

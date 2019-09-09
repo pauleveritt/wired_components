@@ -1,4 +1,5 @@
 import pytest
+from bs4 import BeautifulSoup
 from markupsafe import Markup
 
 
@@ -21,8 +22,11 @@ def test_homepage(registry, app, simple_root):
     renderer: JinjaRenderer = container.get(IJinjaRenderer)
     context = as_dict(view)
     template_name = view.template
-    result: Markup = renderer.render(
+    markup: Markup = renderer.render(
         context, template_name=template_name, container=container
     )
-
-    assert result == '<div>Root: My Site BC: label is BC </div>'
+    soup: BeautifulSoup = BeautifulSoup(markup, 'html.parser')
+    nav = soup.find('nav').string.strip()
+    assert nav == 'BC: label is BC'
+    h1 = soup.find('h1').string.strip()
+    assert h1 == 'Root: My Site'
