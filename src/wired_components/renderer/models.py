@@ -5,8 +5,7 @@ from markupsafe import Markup
 from wired.dataclasses import injected
 from zope.interface import Interface, implementer
 
-from wired_components.configuration import TemplateDirs
-from ..configuration import IConfiguration
+from ..configuration import IConfiguration, TemplateDirs
 
 
 class IJinjaRenderer(Interface):
