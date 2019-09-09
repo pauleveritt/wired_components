@@ -2,11 +2,9 @@
 
 ## Now
 
-## Next
-
-- Try to get rid of `IUrl` singleton perhaps by making request.path unneeded
-
 - Make a `Parents` factory
+
+## Next
 
 - Strip `View` of extra fields
 
@@ -21,3 +19,6 @@
 ## Eventually
 
 ## Done
+
+- Get rid of `IUrl` singleton perhaps by making request.path unneeded
+

@@ -8,7 +8,6 @@ from zope.interface import Interface, implementer
 from wired_components.resource import IRoot
 from .utils import relative_static_path, resource_path, relative_path
 from ..resource import Resource, Root
-from ..url import IUrl
 
 
 class IRequest(Interface):

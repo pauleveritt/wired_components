@@ -6,7 +6,6 @@ from wired import ServiceContainer
 def request_container(registry, simple_root) -> ServiceContainer:
     from wired_components.request import wired_setup as request_setup
     from wired_components.resource import IRoot
-    from wired_components.url import IUrl, Url
 
     # Outside system puts some things in the registry
     registry.register_singleton(simple_root, IRoot)
@@ -16,8 +15,6 @@ def request_container(registry, simple_root) -> ServiceContainer:
     container: ServiceContainer = registry.create_container(
         context=simple_root
     )
-    url = Url(path='somepath')
-    container.register_singleton(url, IUrl)
     return container
 
 

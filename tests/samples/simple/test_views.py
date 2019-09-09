@@ -10,7 +10,6 @@ def app(registry) -> None:
 
 def test_homepage(registry, app, simple_root):
     from wired_components.renderer import IJinjaRenderer, JinjaRenderer
-    from wired_components.url import IUrl, Url
     from wired_components.view import IView, View
 
     context = simple_root
