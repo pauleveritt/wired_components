@@ -35,5 +35,5 @@ class BaseDecorator:
                 # name=self.name,
             )
 
-        attach(wrapped, callback, category='goku')
+        attach(wrapped, callback, category='wired_component')
         return wrapped

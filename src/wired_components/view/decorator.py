@@ -9,7 +9,7 @@ from wired import ServiceRegistry, ServiceContainer
 from wired.dataclasses import Injector
 
 from wired_components.resource import IResource
-from .models import IView, View
+from .models import IView
 from ..decorator import BaseDecorator
 from ..resource import Resource
 
@@ -30,4 +30,4 @@ def register_view(
 
 
 class view(BaseDecorator):
-    for_ = View
+    for_ = IView

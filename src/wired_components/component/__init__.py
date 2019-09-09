@@ -26,6 +26,7 @@ In the future we could resurrect the Jinja2 extension facility to make
 from wired import ServiceRegistry
 
 from .all_components import IAllComponents, all_components
+from .decorator import component
 from .make_context import make_context
 from .models import IComponent
 from .register_component import register_component
