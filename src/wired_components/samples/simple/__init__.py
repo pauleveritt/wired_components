@@ -10,19 +10,18 @@ into some classes.
 Not doing anything exotic (e.g. strictyaml, pydantic.)
 
 """
-from dataclasses import dataclass
 from pathlib import Path
 
 from wired import ServiceRegistry
-from wired.dataclasses import injected
-from zope.interface import implementer
 
 from wired_components import wired_setup as global_setup
 from wired_components.configuration import IConfiguration, Configuration
 from wired_components.resource import IResource, Root, IRoot
-from wired_components.view import IView, View, register_view
+from wired_components.scanner import WiredScanner, IScanner
+from wired_components.view import register_view
 from .loader import load_resources, load_yaml
 
+from wired_components.samples.simple import views
 
 def root_setup(registry: ServiceRegistry) -> None:
     from wired_components import samples
@@ -39,13 +38,6 @@ def configuration_setup(registry) -> None:
     registry.register_singleton(configuration, IConfiguration)
 
 
-@implementer(IView)
-@dataclass
-class RootView(View):
-    title: str = injected(IResource, attr='title')
-    template: str = 'rootview.jinja2'
-
-
 def wired_setup(registry: ServiceRegistry):
     # Wire up the normal parts of wired_components
     global_setup(registry)
@@ -54,8 +46,12 @@ def wired_setup(registry: ServiceRegistry):
     configuration_setup(registry)
     root_setup(registry)
 
-    # Now make some views
-    register_view(registry, RootView, context=IResource)
+    # Get the scanner and look for things
+    container = registry.create_container()
+    scanner: WiredScanner = container.get(IScanner)
+    scanner.scan(views)
+
+    # register_view(registry, RootView, context=IResource)
 
 
 __all__ = [

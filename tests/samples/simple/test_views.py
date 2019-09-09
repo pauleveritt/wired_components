@@ -25,6 +25,7 @@ def test_homepage(registry, app, simple_root):
     # Get the view for root
     view: View = container.get(IView)
 
+
     renderer: JinjaRenderer = container.get(IJinjaRenderer)
     context = view.as_dict()
     template_name = view.template
