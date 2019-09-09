@@ -1,11 +1,11 @@
-from dataclasses import dataclass, field
-from typing import Dict, get_type_hints, Any, List
+from dataclasses import dataclass
+from typing import Dict, get_type_hints, Any
 
 from wired.dataclasses import injected, Context
 from zope.interface import Interface
 
 from ..configuration import Configuration, IConfiguration
-from ..request import Request, parents, IRequest
+from ..request import Request, IRequest
 from ..resource import Resource, Root, IRoot
 
 
@@ -21,15 +21,6 @@ class View:
     context: Resource = injected(Context)
     request: Request = injected(IRequest)
     root: Root = injected(IRoot)
-
-    # TODO Add this to wired_dataclasses:
-    # # If this is field(init=False) then skip
-    #     if full_field.init == False:
-    # continue
-    parents: List[Resource] = field(init=False)
-
-    def __post_init__(self):
-        self.parents = parents(self.context)
 
     def as_dict(self) -> Dict[str, Any]:
         # Return a flattened dictionary as context keys for each field.

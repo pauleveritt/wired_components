@@ -29,9 +29,11 @@ from .models import (
     Document,
 )
 
+from .services import context_parents, Parents, IParents
+
 
 def wired_setup(registry: ServiceRegistry):
-    pass
+    registry.register_factory(context_parents, IParents)
 
 
 __all__ = [
@@ -45,4 +47,7 @@ __all__ = [
     'IDocument',
     'Document',
     'resource',
+    'context_parents',
+    'IParents',
+    'Parents',
 ]
