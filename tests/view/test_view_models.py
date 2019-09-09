@@ -14,7 +14,6 @@ def test_view_instance(registry, view_container, simple_root, sample_view):
     # See if we're constructed correctly
     assert len(view.configuration.template_dirs) == 1
     assert view.context.title == 'A Doc At The Root'
-    assert view.request.path == '/d1/'
     assert view.root.title == 'My Site'
     assert view.parents[0].title == 'My Site'
 

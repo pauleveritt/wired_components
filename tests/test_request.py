@@ -33,5 +33,4 @@ def test_request_instance(registry, request_container, simple_root):
 
     # See if we're constructed correctly
     assert request.context.title == 'My Site'
-    assert request.path == 'somepath'
     assert request.root == simple_root

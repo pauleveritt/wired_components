@@ -2,10 +2,6 @@
 
 ## Now
 
-- Land `IContext` and deprecate `IRequest` singleton
-
-    - Slim down all usages in tests
-
 ## Next
 
 - Try to get rid of `IUrl` singleton perhaps by making request.path unneeded

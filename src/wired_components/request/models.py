@@ -2,10 +2,10 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 
-from wired.dataclasses import injected
+from wired.dataclasses import injected, Context
 from zope.interface import Interface, implementer
 
-from wired_components.resource import IRoot, IResource
+from wired_components.resource import IRoot
 from .utils import relative_static_path, resource_path, relative_path
 from ..resource import Resource, Root
 from ..url import IUrl
@@ -20,8 +20,7 @@ class IRequest(Interface):
 class Request:
     """ State and methods related to the currently-processed entity """
 
-    context: Resource = injected(IResource)
-    path: str = injected(IUrl, attr='path')
+    context: Resource = injected(Context)
     root: Root = injected(IRoot)
 
     def static_url(self, asset_path: str) -> str:

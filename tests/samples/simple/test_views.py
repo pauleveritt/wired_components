@@ -16,10 +16,6 @@ def test_homepage(registry, app, simple_root):
     context = simple_root
     container = registry.create_container(context=context)
 
-    # Per-request singletons
-    url = Url(path='/')
-    container.register_singleton(url, IUrl)
-
     # Get the view for root
     view: View = container.get(IView)
 
