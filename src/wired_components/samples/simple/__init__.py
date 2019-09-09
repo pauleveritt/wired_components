@@ -16,12 +16,11 @@ from wired import ServiceRegistry
 
 from wired_components import wired_setup as global_setup
 from wired_components.configuration import IConfiguration, Configuration
-from wired_components.resource import IResource, Root, IRoot
+from wired_components.resource import Root, IRoot
+from wired_components.samples.simple import views
 from wired_components.scanner import WiredScanner, IScanner
-from wired_components.view import register_view
 from .loader import load_resources, load_yaml
 
-from wired_components.samples.simple import views
 
 def root_setup(registry: ServiceRegistry) -> None:
     from wired_components import samples
@@ -50,8 +49,6 @@ def wired_setup(registry: ServiceRegistry):
     container = registry.create_container()
     scanner: WiredScanner = container.get(IScanner)
     scanner.scan(views)
-
-    # register_view(registry, RootView, context=IResource)
 
 
 __all__ = [

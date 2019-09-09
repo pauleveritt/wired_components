@@ -10,7 +10,6 @@ def app(registry) -> None:
 
 def test_homepage(registry, app, simple_root):
     from wired_components.renderer import IJinjaRenderer, JinjaRenderer
-    from wired_components.resource import IResource
     from wired_components.url import IUrl, Url
     from wired_components.view import IView, View
 
@@ -20,7 +19,6 @@ def test_homepage(registry, app, simple_root):
     # Per-request singletons
     url = Url(path='/')
     container.register_singleton(url, IUrl)
-    container.register_singleton(context, IResource)
 
     # Get the view for root
     view: View = container.get(IView)
