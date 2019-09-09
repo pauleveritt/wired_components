@@ -1,7 +1,9 @@
 from dataclasses import dataclass, field
+from typing import Dict, Type
 
 from jinja2 import ChoiceLoader, Environment, Template, PackageLoader
 from markupsafe import Markup
+from wired import ServiceContainer
 from wired.dataclasses import injected
 from zope.interface import Interface, implementer
 
@@ -28,9 +30,16 @@ class JinjaRenderer:
         self.environment = Environment(loader=choice_loader)
 
     def render(
-            self, context, template_name: str,
+            self, context: Dict, template_name: str,
+            container: ServiceContainer
     ) -> Markup:
         """ Given a dataclass, flatten it and render with jinja2 template """
+
+        # Always put the wrapped components into the template context
+        from ..component import IWrapComponents
+        wrapped_components: Dict[str, Type] = container.get(IWrapComponents)
+
+        context.update(wrapped_components)
 
         template: Template = self.environment.get_or_select_template(
             template_name

@@ -31,5 +31,5 @@ def render_component(
     renderer: JinjaRenderer = container.get(IJinjaRenderer)
 
     # Render and return
-    m = renderer.render(context, template_name)
+    m = renderer.render(context, template_name, container=container)
     return m

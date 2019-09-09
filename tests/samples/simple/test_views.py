@@ -22,7 +22,7 @@ def test_homepage(registry, app, simple_root):
     context = as_dict(view)
     template_name = view.template
     result: Markup = renderer.render(
-        context, template_name=template_name,
+        context, template_name=template_name, container=container
     )
 
-    assert result == '<div>Root: My Site</div>'
+    assert result == '<div>Root: My Site BC: label is BC </div>'

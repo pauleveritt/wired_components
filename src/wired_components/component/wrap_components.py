@@ -51,7 +51,6 @@ def wrap_components(
             render_component,
             component_name=component_name,
             container=container,
-            all_components=components,
         )
         for component_name, component in components.items()
     }

@@ -12,8 +12,12 @@ def renderer_container(registry) -> ServiceContainer:
     container.register_singleton(configuration, IConfiguration)
 
     # Now do wired_setup
-    from wired_components.renderer import wired_setup
-    wired_setup(registry)
+    from wired_components.renderer import wired_setup as renderer_setup
+    renderer_setup(registry)
+
+    # Renderer needs the IWrapComponents service
+    from wired_components.component import wired_setup as components_setup
+    components_setup(registry)
 
     return container
 
@@ -44,10 +48,10 @@ def test_renderer_injection(this_renderer):
     assert len(this_renderer.template_dirs) == 1
 
 
-def test_renderer_render(this_renderer):
+def test_renderer_render(renderer_container, this_renderer):
     context = dict(label='somelabel')
     template_name = 'breadcrumb.jinja2'
     result: Markup = this_renderer.render(
-        context, template_name=template_name,
+        context, template_name=template_name, container=renderer_container
     )
     assert result == 'label is somelabel'
