@@ -22,7 +22,7 @@ Done as SRP (single-responsibility-principle.)
 """
 
 from functools import partial
-from typing import Type, Dict, Any
+from typing import Dict, Any, Callable
 
 from wired import ServiceContainer
 from zope.interface import Interface
@@ -37,7 +37,7 @@ class IWrapComponents(Interface):
 
 def wrap_components(
         container: ServiceContainer,
-) -> Dict[str, Type]:
+) -> Dict[str, Callable]:
     """ Wrap component rendering with a partial to gain access to container
 
     """

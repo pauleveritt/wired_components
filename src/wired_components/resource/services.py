@@ -3,7 +3,7 @@
 Standalone factories for resource-related operations.
 
 """
-from typing import List
+from typing import List, Optional
 
 from wired import ServiceContainer
 from wired.dataclasses import Context
@@ -17,7 +17,7 @@ class IParents(Interface):
     """ Marker for a list of parent resources """
 
 
-Parents = List[Resource]
+Parents = List[Optional[Resource]]
 
 
 def context_parents(container: ServiceContainer) -> Parents:

@@ -30,7 +30,7 @@ def load_resources(contents: Path) -> Root:
         # Find the parent folder, which should already be in root
         parent_path = resource.parents[1].relative_to(contents)
         if str(parent_path) == '.':
-            parent_path = ''
+            parent_path = Path('')
         parent = find_resource(root, '/' + str(parent_path))
         folder_name = str(resource.parent.stem)
         folder_yaml.pop('type')

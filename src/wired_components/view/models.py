@@ -12,7 +12,7 @@ class IView(Interface):
 
 @dataclass
 class View:
-    pass
+    template: str
 
 
 def as_dict(view: View) -> Dict[str, Any]:
